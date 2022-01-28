@@ -34,7 +34,7 @@ public class stepDefinitions {
     }
     @When("I validate the response status as {int}")
     public void i_validate_the_response_status_as(Integer int1) {
-        steps.InvalidResponseStatus();
+        steps.InvalidResponseStatus(int1);
     }
     @When("I validate the Error message")
     public void i_validate_the_error_message() {

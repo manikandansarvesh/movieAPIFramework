@@ -7,10 +7,13 @@ import io.restassured.response.ResponseBody;
 import io.restassured.specification.RequestSpecification;
 import org.junit.Assert;
 import utils.PropertyManager;
+import utils.TestUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+
+import static utils.TestUtils.getMapValues;
 
 /**
  * @author manikandan
@@ -50,8 +53,7 @@ public class Steps {
         Assert.assertEquals("Response body contains sabe movie for b2b", promotionIdValue.contains("sabe movie for b2b"), true);
     }
 
-    public void validatePromtionDetails() throws IOException {
-
+    public void validatePromtionDetails() throws Exception {
 
         JsonPath jsonPathEvaluator = response.jsonPath();
         String responsePromoType = jsonPathEvaluator.get("promotions[1].promoType");
@@ -63,7 +65,7 @@ public class Steps {
 
         Assert.assertEquals(value, 32);
 
-        LinkedHashMap<String, ArrayList<String>> map = new LinkedHashMap();
+        /*LinkedHashMap<String, ArrayList<String>> map = new LinkedHashMap();
         map.put("ar", new ArrayList<String>());
         String movieName = props.getProps().getProperty("movieName");
         System.out.println(movieName);
@@ -76,18 +78,15 @@ public class Steps {
         enMAp.get("en").add(movieName);
         enMAp.get("en").add(" ");
         enMAp.get("en").add(" ");
-        map.putAll(enMAp);
+        map.putAll(enMAp);*/
 
         LinkedHashMap<String, ArrayList<String>> responseMap = response.jsonPath().get("promotions[0].localizedTexts");
-        Assert.assertEquals(responseMap.size(), map.size());
-        Assert.assertEquals(responseMap, map);
+        Assert.assertEquals(responseMap.size(), getMapValues().size());
+        Assert.assertEquals(responseMap, getMapValues());
         String responseProgram = jsonPathEvaluator.get("promotions[0].properties[0].programType ");
         Assert.assertEquals(responseProgram, props.getProps().getProperty("programType"));
         String responseProgram1 = jsonPathEvaluator.get("promotions[4].properties[0].programType ");
-        Assert.assertEquals(responseProgram1, props.getProps().getProperty("programType1"));
-
-
-    }
+        Assert.assertEquals(responseProgram1, props.getProps().getProperty("programType1")); }
 
 
     public void validateResponseStatus() {
@@ -95,7 +94,6 @@ public class Steps {
     }
 
     public Response Invalid_APIKey() {
-
         RestAssured.baseURI = BASE_URL;
         RequestSpecification request = RestAssured.given();
         response = request.queryParam("apikey", apikey + "Invalid").get();
@@ -107,8 +105,8 @@ public class Steps {
 
     }
 
-    public void InvalidResponseStatus() {
-        Assert.assertEquals(response.getStatusCode(), 403);
+    public void InvalidResponseStatus(int statusCode) {
+        Assert.assertEquals(response.getStatusCode(), statusCode);
     }
 
 
@@ -122,8 +120,6 @@ public class Steps {
 
         Assert.assertEquals(Integer.parseInt(errorCode), 8001);
         Assert.assertNotNull(jsonPathEvaluator.get("error.requestId"));
-
-
 
     }
 }
