@@ -14,7 +14,9 @@ Implemented stepdefinitions for E2EFeature
 Used Property class for reading testdata
 
 Tests covered
-  1.ValidatePromotionDetails
+
+  1.ValidatePromotionDetail
+  s
   2 Inavalid
   
 Command to execute tests : mvn test
