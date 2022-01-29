@@ -64,22 +64,7 @@ public class Steps {
         int value = jsonPathEvaluator.get("promotions[0].orderId");
 
         Assert.assertEquals(value, 32);
-
-        /*LinkedHashMap<String, ArrayList<String>> map = new LinkedHashMap();
-        map.put("ar", new ArrayList<String>());
-        String movieName = props.getProps().getProperty("movieName");
-        System.out.println(movieName);
-        map.get("ar").add(movieName);
-        map.get("ar").add(" ");
-        map.get("ar").add(" ");
-
-        LinkedHashMap<String, ArrayList<String>> enMAp = new LinkedHashMap();
-        enMAp.put("en", new ArrayList<String>());
-        enMAp.get("en").add(movieName);
-        enMAp.get("en").add(" ");
-        enMAp.get("en").add(" ");
-        map.putAll(enMAp);*/
-
+        
         LinkedHashMap<String, ArrayList<String>> responseMap = response.jsonPath().get("promotions[0].localizedTexts");
         Assert.assertEquals(responseMap.size(), getMapValues().size());
         Assert.assertEquals(responseMap, getMapValues());
