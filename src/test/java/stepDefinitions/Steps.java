@@ -35,8 +35,6 @@ public class Steps {
         RestAssured.baseURI = BASE_URL;
         RequestSpecification request = RestAssured.given();
         response = request.queryParam("apikey", apikey).get();
-
-        System.out.println("Response is : " + response.getStatusCode());
         Assert.assertEquals(response.getStatusCode(), 200);
 
         return response;
@@ -64,7 +62,7 @@ public class Steps {
         int value = jsonPathEvaluator.get("promotions[0].orderId");
 
         Assert.assertEquals(value, 32);
-        
+
         LinkedHashMap<String, ArrayList<String>> responseMap = response.jsonPath().get("promotions[0].localizedTexts");
         Assert.assertEquals(responseMap.size(), getMapValues().size());
         Assert.assertEquals(responseMap, getMapValues());
@@ -82,8 +80,6 @@ public class Steps {
         RestAssured.baseURI = BASE_URL;
         RequestSpecification request = RestAssured.given();
         response = request.queryParam("apikey", apikey + "Invalid").get();
-
-        System.out.println("Response is : " + response.getStatusCode());
         Assert.assertEquals(response.getStatusCode(), 403);
 
         return response;
