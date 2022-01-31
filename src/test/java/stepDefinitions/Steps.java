@@ -1,5 +1,6 @@
 package stepDefinitions;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.restassured.RestAssured;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
@@ -7,9 +8,9 @@ import io.restassured.response.ResponseBody;
 import io.restassured.specification.RequestSpecification;
 import org.junit.Assert;
 import utils.PropertyManager;
-import utils.TestUtils;
 
-import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
@@ -30,7 +31,7 @@ public class Steps {
         RestAssured.baseURI = BASE_URL;
     }
 
-    public Response validateAPIKey() {
+    public  Response validateAPIKey() {
 
         RestAssured.baseURI = BASE_URL;
         RequestSpecification request = RestAssured.given();
@@ -69,7 +70,13 @@ public class Steps {
         String responseProgram = jsonPathEvaluator.get("promotions[0].properties[0].programType ");
         Assert.assertEquals(responseProgram, props.getProps().getProperty("programType"));
         String responseProgram1 = jsonPathEvaluator.get("promotions[4].properties[0].programType ");
-        Assert.assertEquals(responseProgram1, props.getProps().getProperty("programType1")); }
+        Assert.assertEquals(responseProgram1, props.getProps().getProperty("programType1"));
+
+        String responseString = response.asString();
+        String path = "src/main/java/main/test-json.json";
+        Files.write( Paths.get(path), responseString.getBytes());
+
+    }
 
 
     public void validateResponseStatus() {
